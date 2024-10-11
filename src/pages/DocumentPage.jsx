@@ -7,7 +7,7 @@ const DocumentPage = () => {
   return (
     
     <div className='h-screen px-8 py-10'>
-        <div className='flex gap-2 items-center bg-myCustomColor-primaryC' onClick={()=>navigate(-1)}>
+        <div className='flex gap-2 items-center text-myCustomColor-primaryC' onClick={()=>navigate(-1)}>
           <ArrowLeft />
           <p>Revenir en arrière</p>
         </div>

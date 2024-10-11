@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const Chat = (props) => {
-  const { typeChat } = props;
+  const { typeChat, fontSize } = props;
 
-  const conversations = ["salut 1", "salut 2", "salut 3", "salut 4", "salut 5", "salut6"];
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
   const [isVocal, setIsVocal] = useState(false);
   const [isSOS, setIsSOS] = useState(false);
 
@@ -26,56 +24,47 @@ const Chat = (props) => {
     }
   }, [browserSupportsSpeechRecognition]);
 
+  // Fonction pour envoyer le message à l'API
   const sendMessage = useCallback(async (messageText, isVocalMode = false) => {
     const endpoint = typeChat;
 
     try {
-      // Envoyer le message à l'API
       const response = await fetch(`http://127.0.0.1:5000/${endpoint}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message: messageText,
-          isVocal: isVocalMode
-        })
+          isVocal: isVocalMode,
+        }),
       });
 
       const data = await response.json();
-      console.log(data)
 
       // Ajouter la réponse de l'API au tableau des messages
-      setMessages(prevMessages => [
+      setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: 'bot', text: data.response }
+        { sender: 'bot', text: data.response },
       ]);
-
     } catch (error) {
-      console.error('Erreur lors de l\'appel à l\'API:', error);
+      console.error("Erreur lors de l'appel à l'API:", error);
     }
   }, [typeChat]);
 
+  // Envoyer le message capté une fois que l'utilisateur a fini de parler
   useEffect(() => {
-    if (transcript) {
-    
-      setTimeout(() => {
-        console.log('après 2 secondes')
-        console.log(transcript)
+    if (!listening && transcript) {
+      // Envoyer après la fin de la parole (quand la reconnaissance vocale s'arrête)
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: 'user', text: transcript },
+      ]);
 
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { sender: 'user', text: transcript }
-        ]);
-  
-        sendMessage(transcript, true);
-
-        resetTranscript();
-
-      }, "2000");
-      
+      sendMessage(transcript, true); // Envoyer le message capté
+      resetTranscript(); // Réinitialiser le transcript après l'envoi
     }
-  }, [transcript, sendMessage, resetTranscript]);
+  }, [listening, transcript, sendMessage, resetTranscript]);
 
   // Si la reconnaissance vocale n'est pas supportée, afficher un message
   if (!speechRecognitionSupported) {
@@ -95,6 +84,7 @@ const Chat = (props) => {
 
           return (
             <li
+              style={{fontSize : fontSize}}
               key={index}
               className={`${listItemClass} max-w-[70%] px-4 py-5 rounded-md font-medium text-white`}
             >

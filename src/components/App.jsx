@@ -7,19 +7,20 @@ import ChatVocal from '../pages/ChatVocal';
 import ChatSos from '../pages/ChatSos';
 import DocumentPage from '../pages/DocumentPage';
 import ParamPage from '../pages/ParamPage';
-import ChatBot from '../pages/ChatBot';
-import VoiceToText from '../pages/VoiceToText';
+
+import WelcomePage from '../pages/WelcomePage';
 
 const App = () => {
   return (
     <BrowserRouter>
         <Routes >
-            <Route index element={<VoiceToText />} />
+            <Route index element={<AuthPage />} />
             <Route path='/home' element={<HomePage />} />
             <Route path='/vocal' element={<ChatVocal />} />
             <Route path='/sos' element={<ChatSos />} />
             <Route path='/documents' element={<DocumentPage />} />
             <Route path='/settings' element={<ParamPage />} />
+            <Route path='/welcome' element={<WelcomePage />} />
 
         </Routes>
     </BrowserRouter>

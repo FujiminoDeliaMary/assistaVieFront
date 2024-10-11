@@ -5,8 +5,12 @@ import Wave from 'react-wavify';
 import { Pencil, X } from 'lucide-react';
 import axios from 'axios';
 import Chat from '../components/Chat';
+import { Link } from 'react-router-dom';
 
 const ChatVocal = () => {
+
+  const [fontSize, setFontSize] = useState(16);
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isVocal, setIsVocal] = useState(false);
@@ -75,28 +79,23 @@ const ChatVocal = () => {
 
 
 
-  useEffect(() => {
-    sendMessage();
-  }, [sendMessage, input, isVocal]);
-
-  
-  const handleWriteClick = () => {
-    setIsVocal(false);
-    setInput(''); // Réinitialiser l'input si nécessaire
-  };
+  // const handleWriteClick = () => {
+  //   setIsVocal(false);
+  //   setInput(''); // Réinitialiser l'input si nécessaire
+  // };
 
  
 
-  const handleStopSpeakingClick = () => {
-    setIsVocal(true);
-    // Ici vous pouvez appeler une fonction pour gérer le chat vocal
-  };
+  // const handleStopSpeakingClick = () => {
+  //   setIsVocal(true);
+  //   // Ici vous pouvez appeler une fonction pour gérer le chat vocal
+  // };
 
   return (
     <div className='h-screen pt-10'>
       <div className='flex justify-between items-center px-8'>
         <img src={doctorM} alt="Doctor Icon" />
-        <SizeFont />
+        <SizeFont fontSize={fontSize} setFontSize={setFontSize}/>
       </div>
 
       <h1 className='my-10 px-8 text-2xl font-bold'>Bonjour !</h1>
@@ -106,7 +105,7 @@ const ChatVocal = () => {
 
       {/* CHAT ICI !!!!! */}
 
-      <Chat typeChat="chat"/>
+      <Chat typeChat="chat" fontSize={fontSize}/>
 
       {/*  */}
       <div className='flex flex-col'>
@@ -118,18 +117,18 @@ const ChatVocal = () => {
       </div>
 
       <div className='flex justify-center items-center gap-10 absolute bottom-3 w-full font-bold text-lg z-10 mx-auto'>
-        <div className='flex flex-col justify-center items-center gap-3' onClick={handleWriteClick}>
+        <div className='flex flex-col justify-center items-center gap-3' >
           <p className='bg-myCustomColor-primaryC px-5 py-5 rounded-full'>
             <Pencil size={30} color='white' />
           </p>
           <p>Ecrire</p>
         </div>
-        <div className='flex flex-col justify-center items-center gap-3' onClick={handleStopSpeakingClick}>
+        <Link to='/home' className='flex flex-col justify-center items-center gap-3' >
           <p className='bg-myCustomColor-sosC px-5 py-5 rounded-full'>
             <X size={30} color='white' />
           </p>
           <p>Arrêtez de parler</p>
-        </div>
+        </Link>
       </div>
 
       <Wave 

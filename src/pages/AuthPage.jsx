@@ -5,6 +5,8 @@ import doctorM from '../assets/icons/manDoctor.svg';
 import doctorW from '../assets/icons/womanDoctor.svg'
 import hospital from '../assets/icons/hospital.svg'
 import logo from '../assets/logo.svg'
+import { Link } from 'react-router-dom';
+
 
 const AuthPage = () => {
   return (
@@ -16,7 +18,7 @@ const AuthPage = () => {
 
         <div className="flex flex-col gap-7 justify-center items-center">
              <p className='px-7 text-2xl py-2 bg-white rounded-md text-myCustomColor-primaryC'><a href="/">Connexion</a></p>
-            <p><a href="/" className='px-7 text-2xl py-2 bg-white rounded-md text-myCustomColor-primaryC'>Inscription</a></p>
+            <Link to='/welcome'><a href="/" className='px-7 text-2xl py-2 bg-white rounded-md text-myCustomColor-primaryC'>Inscription</a></Link>
         </div>
        
 

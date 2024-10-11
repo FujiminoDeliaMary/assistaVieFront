@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SOS from '../assets/SOS.svg';
 import SizeFont from '../components/SizeFont';
 import Wave from 'react-wavify'
 import { Pencil, X } from 'lucide-react';
 import Chat from '../components/Chat';
+import { Link } from 'react-router-dom';
 
 
 const ChatSos = () => {
+  const [fontSize, setFontSize] = useState(16);
+  
   return (
     <div className='h-screen pt-10'>
         <SizeFont className=''/>
@@ -29,12 +32,12 @@ const ChatSos = () => {
             </p>
             <p>Ecrire</p>
           </div>
-          <div className='flex flex-col justify-center items-center gap-3'>
+          <Link to='/home' className='flex flex-col justify-center items-center gap-3'>
               <p className='bg-myCustomColor-sosC px-5 py-5 rounded-full'>
                 <X size={30} color='white'/>
               </p>
               <p>Arrêtez de parler</p>
-          </div>
+          </Link>
         </div>
         
         <Wave 
